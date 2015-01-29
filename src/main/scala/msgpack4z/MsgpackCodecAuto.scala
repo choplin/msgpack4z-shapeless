@@ -6,7 +6,7 @@ import scalaz.{-\/, \/-}
 object MsgpackCodecAuto extends TypeClassCompanion[MsgpackCodec] {
   private[msgpack4z] final val HeaderSize = 1
 
-  implicit val MsgpackCodecInstance: TypeClass[MsgpackCodec] =
+  val typeClass: TypeClass[MsgpackCodec] =
     new MsgpackCodecTypeClassImpl[Byte](0, 1)(CodecInstances.anyVal.byteCodec)
 
   def codecTypeClass[A](leftKey: A, rightKey: A)(implicit A: MsgpackCodec[A]): TypeClass[MsgpackCodec] =

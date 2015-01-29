@@ -3,11 +3,12 @@ package msgpack4z
 import msgpack4z.CodecInstances.all._
 import org.scalacheck.{Arbitrary, Prop, Properties}
 import shapeless.TypeClass
-import shapeless.contrib.scalacheck._
-import shapeless.contrib.scalaz._
+import org.scalacheck.Shapeless._
 import scala.util.control.NonFatal
 import scalaz.{-\/, Equal, \/-}
 import scalaz.std.AllInstances._
+import shapeless.Lazy._
+import MsgpackCodecAuto._
 
 sealed abstract class AAA[X]
 object AAA {
@@ -63,7 +64,7 @@ abstract class SpecBase(typeClass: TypeClass[MsgpackCodec], name: String) extend
   property("Tree") = checkLaw[Tree[Int]]
 }
 
-abstract class AutoSpec1(name: String) extends SpecBase(MsgpackCodecAuto.MsgpackCodecInstance, name + " auto1")
+abstract class AutoSpec1(name: String) extends SpecBase(MsgpackCodecAuto.typeClass, name + " auto1")
 abstract class AutoSpec2(name: String) extends SpecBase(MsgpackCodecAuto.codecTypeClass("foo", "bar"), name + " auto2")
 
 trait Msgpack06Spec{ _: SpecBase =>
